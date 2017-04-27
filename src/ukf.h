@@ -26,8 +26,11 @@ public:
   ///* state vector: [pos1 pos2 vel_abs yaw_angle yaw_rate] in SI units and rad
   VectorXd x_;
 
+  VectorXd x_aug_;
+
   ///* state covariance matrix
   MatrixXd P_;
+  MatrixXd P_aug_;
 
   ///* predicted sigma points matrix
   MatrixXd Xsig_pred_;
@@ -89,6 +92,18 @@ public:
    * @param meas_package The latest measurement data of either radar or laser
    */
   void ProcessMeasurement(MeasurementPackage meas_package);
+
+  /**
+   * SigmaPointPrediction predicts sigma points
+   * @param delta_t Time between k and k+1 in s
+   */
+  void SigmaPointPrediction(double delta_t);
+
+  /**
+   * PredictMeanAndCovariance predicts the state, and the state covariance
+   * matrix
+   */
+  void PredictMeanAndCovariance();
 
   /**
    * Prediction Predicts sigma points, the state, and the state covariance
